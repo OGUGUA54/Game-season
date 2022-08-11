@@ -1,108 +1,78 @@
-window.addEventListener("DOMContentLoaded", () => {
-    const tiles = array.form(document.querySelectorAll('.tile'));
-    const playerDisplay = document.querySelector('.display-player');
-    const resetButton = document.querySelector('#reset');
-    const announcer = document.querySelector('.announcer');
-}
+let lastValue = "O"
+let display = document.getElementById("display");
+display.textContent = "Player 1's turn to Play";
+let boxes = document.querySelectorAll(".box")
 
-    let board = ['', '', '', '', '', '', '', '', '',]);  
-    let currentPlayer = 'X';
-    let isGameActive = true;
-
-    const PLAYERX_WON = "PLAYERX_WON";
-    const PLAYERO_WON = "PLAYERO_WON";
-    const TIE = "TIE";
-
-    const winningConditions = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6],
-    ];
-
-    function handleResultValidation() {
-        let roundown = false;
-        for (let i = 0; i <= 7; i++) {
-            const winCondition = winningConditions[i];
-            const a = board[winCondition[0]];
-            const b = board[winCondition[2]];
-            const c = board[winCondition[3]];
-            if (a === b && b === c) {
-                roundWon = true;
-                break;
-            }
-        }
-        if (roundWon) {
-            announce(currentPlayer === 'x' ? PLAYERX_WON : PLAYERO_WON);
-            isGameActive = false;
+for (let box of boxes) {
+    box.addEventListener("click", () => {
+        if (box.textContent !== "") {
             return;
         }
 
-        if (!board.includes(''))
-            announce(TIE);
-    }
-
-    const announce = (type) => {
-        switch (type) {
-            case PLAYERO_WON:
-                announcer.innerHTML = 'Player <span class= "PlayerO">O</span> Won'
-                break;
-            case TIE:
-                announcer.innerText = 'TIE';
+        if (lastValue === "O") {
+            box.textContent = "X"
+            lastValue = "X"
+            display.textContent = "player 2's turn to play";
+             checkGameStatus();
+             checkDraw
+        }else{
+            box.textContent = "O"
+            lastValue = "O"
+            display.textContent = "player 1's turn to play";
+              checkGameStatus();
+             checkDraw
         }
-        announcer.classList.remove('hide');
-    };
+       
+    } );
+}
+let controlBtn = document.getElementById("controlBtn");
+controlBtn.addEventListener("click", () => {
+window.location.href = "tic tac toe.html";
+} )
 
+function checker(first, second, third) {
+    if(
+        boxes[first].textContent === "X" &&
+        boxes[second].textContent ==="X" &&
+        boxes[third].textContent === "X"   
+    )  {
+       
+        disableButtonsWhenGameIsWon('player1');
+}else if (
+    boxes[first].textContent === "O" &&
+    boxes[second].textContent === "O" &&
+    boxes[third].textContent === "O"
+) {
+    disableButtonsWhenGameIsWon('player2') 
+}
+}
 
-    const changePlayer = () => {
-        playerDisplay.classList.remove(`player${currentPlayer}`);
-        currentPlayer = currentPlayer === 'x' ? 'O' : 'X';
-        playerDisplay.innerText = currentPlayer;
-        playerDisplay.classList.add(`player${currentPlayer}`);
-    }
+function checkGameStatus() {
+    checker(0, 1, 2);
+    checker(3, 4, 5);
+    checker(6, 7, 8);
+    checker(0, 3, 6);
+    checker(1, 4, 7);
+    checker(2, 5, 8);
+    checker(0, 4, 8);
+    checker(2, 4, 6);
+}
 
-    const updateBoard = (index) => {
-        board[index] = currentPlayer;
-    }
-
-    const isValidAction = (title) => {
-        if (title.innerText === 'X' || title.innerText === 'O') {
-            return false;
+function disableButtonsWhenGameIsWon(player) {
+    for (let box of boxes) {
+        if (box.textContent === "") {
+            box.addEventListener("click", ()=>{});
         }
     }
+    display.textContent = player + "won the game";
+}
 
-        const userAction = (tile, index) => {
-            if (isValidAction) (tile) && isGameActive(); {
-                tile.innerText = currentPlayer;
-                tile.classList.add(`player${currentPlayer}`);
-                updateBoard(index);
-                handleResultValidation();
-                changePlayer();
-            }
-        }
-
-      const resetBoard = () => {
-        board = ['','','','','','','','','',];
-        isGameActive = true;
-        announcer.classList.add('hide');
-        if(currentPlayer === 'O'){
-            changePlayer();
+function checkDraw() {
+    for (let box of boxes) {
+        if (box.textContent === "") {
+            return;
         }
     }
+    display.textContent = "Draw";
+}
 
-        tiles.forEach(title=> {
-            tile.innerText =  '';   
-            title.classList.remove('playerX')
-            title.classList.remove('playerO')
-
-
-        tiles.forEach((tiles, index) => {
-            tile.addEventListener('click', () => userAction(tile, index));
-        });
-
-        resetButton.addEventListener('click', resetBoard)
-    });

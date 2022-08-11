@@ -1,15 +1,13 @@
-.us {
-    background-color: darkolivegreen;
+ 
+  .us{  background-color: darkolivegreen;
 
 
 }
 
-.display{display: flex;
+.display {
+    display: flex;
     justify-content: center;
 
-}
-.oma{display: flex;
-    justify-content: center;
 }
 
 .tic {
@@ -39,6 +37,10 @@
     width: 100px;
     background-color: yellow;
     margin: 2px;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .they {
@@ -71,4 +73,13 @@
     display: flex;
     justify-content: center;
 
+}
+#controlBtn{ color: aliceblue;
+    background-color: blue;
+    display: flex;
+   
+}
+
+#yes{ display: flex;
+    justify-content: center;
 }
