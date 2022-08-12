@@ -31,6 +31,10 @@ window.location.href = "tic tac toe.html";
 } )
 
 function checker(first, second, third) {
+    if(display.textContent.includes("won the game")) {
+        return;
+    }
+
     if(
         boxes[first].textContent === "X" &&
         boxes[second].textContent ==="X" &&
@@ -43,7 +47,10 @@ function checker(first, second, third) {
     boxes[second].textContent === "O" &&
     boxes[third].textContent === "O"
 ) {
-    disableButtonsWhenGameIsWon('player2') 
+    disableButtonsWhenGameIsWon('player2');
+    return;
+}else{
+    checkDraw()
 }
 }
 
@@ -61,7 +68,8 @@ function checkGameStatus() {
 function disableButtonsWhenGameIsWon(player) {
     for (let box of boxes) {
         if (box.textContent === "") {
-            box.addEventListener("click", ()=>{});
+            // box.addEventListener("click", ()=>{});
+            box.toggleAttribute('disabled')
         }
     }
     display.textContent = player + "won the game";
@@ -74,5 +82,5 @@ function checkDraw() {
         }
     }
     display.textContent = "Draw";
-}
+} console.log(check)
 
